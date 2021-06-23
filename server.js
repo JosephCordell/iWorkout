@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URI /* || 'mongodb://localhost/workout' */,
   useFindAndModify: false,
 }).then(() => {
   console.log('Connected to database!');
-}).then(async () => {
+}).then( () => {
   // Start the API server
   app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);
