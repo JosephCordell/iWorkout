@@ -1,29 +1,32 @@
-const express = require("express");
+const express = require('express');
 
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const routes = require('./routes');
+require('dotenv').config();
+
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static('public'));
+app.use(routes);
+
 
 // Connect to the Mongo DB
-mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost/workout',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-  }
-).then(() => {
-  const routes = require("./routes")(mongoose);
-  app.use(routes);
-  console.log('Database is connected');
+mongoose.connect(process.env.MONGODB_URI /* || 'mongodb://localhost/workout' */, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+}).then(() => {
+  console.log('Connected to database!');
+}).then(async () => {
   // Start the API server
-  app.listen(PORT, function() {
-    console.log(`Now listening on port ${port}`);
+  app.listen(PORT, () => {
+    console.log(`App running on port ${PORT}!`);
   });
-});
+})
+
+

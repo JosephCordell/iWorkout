@@ -1,3 +1,22 @@
+
+// get all workout data from back-end
+
+const blankData = {exercises: [{duration: 0, name: "", weight: 0}], totalDuration: 0};
+
+fetch("/api/workouts/range")
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    let weekData = Array(7).fill(blankData);
+    for (let i = 0; i < data.length; i++) {
+      weekData[new Date(data[i].day).getDay()] = data[i];
+    }
+    populateChart(weekData);
+  });
+
+  API.getWorkoutsInRange()
+
 function generatePalette() {
   const arr = [
     '#003f5c',
